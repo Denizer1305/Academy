@@ -1,33 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
- {%block title%}
+    <meta charset="utf-8">
+    {% block title %}
     {% if title %}
-    <title>{{title}}</title>
-    {% else %}
-    <title>Flask title</title>
-    {% endif %}
- {% endblock %}
+        <title>{{title}}</title>
+            {% else %}
+        <title>Flask site</title>
+            {% endif %}
+  {% endblock %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link type="text/css" href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
 </head>
 <body>
-{% block content -%}
+    {% block content -%}
     {%- block mainmenu -%}
-    <ul>
+    <div class="topnav" id="myTopnav">
         {% for el in menu -%}
-            <li>{{el}}</li>
+            <a href="{{el.url}}">{{el.name}}</a>
         {% endfor -%}
-    </ul>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
+    {% endblock mainmenu -%}
 
-    {%- endblock  mainmenu -%}
 
-    {% if title %}
+    {% if title -%}
     <h1>{{title}}</h1>
-        {% else %}
-    <h1> Render text </h1>
-    {% endif %}
+    {% else -%}
+    <h1>Random text</h1>
+    {% endif -%}
 
-{% endblock -%}
+{% endblock %}
 
 </body>
+<script>
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+</script>
 </html>
