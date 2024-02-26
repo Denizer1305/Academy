@@ -1,6 +1,35 @@
 body{
 margin: 0;
 }
+
+ul.list-posts {
+    list-style:none;
+    margin: 0;
+    padding 0;
+    max-width 600px;
+}
+
+ul.list-posts li{
+    margin: 20px 0 0 0;
+    border 1px solid #eee;
+}
+
+ul.list-posts .title{
+    margin: 0px;
+    padding: 5px;
+    background: #eee;
+    text-decoration: none;
+}
+ul.list-posts .title a:hover{
+    color: blue;
+    text-decoration: none;
+}
+
+ul.list-posts .annonce{
+    margin: 0px;
+    padding: 10px 5px 10px 5px;
+
+}
 .flash{
     padding:15px;
     border-radius: 10px;

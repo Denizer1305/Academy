@@ -17,7 +17,7 @@
     {%- block mainmenu -%}
     <div class="topnav" id="myTopnav">
         {% for el in menu -%}
-            <a href="{{el.url}}">{{el.name}}</a>
+            <a href="{{el.url}}">{{el.title}}</a>
         {% endfor -%}
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
             <i class="fa fa-bars"></i>
@@ -29,7 +29,7 @@
     {% if title -%}
     <h1>{{title}}</h1>
     {% else -%}
-    <h1>Random text</h1>
+    <h1>Главная страница</h1>
     {% endif -%}
 
 {% endblock %}
