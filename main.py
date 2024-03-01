@@ -48,7 +48,7 @@ def register():
             res = dbase.addUser(request.form['name'], request.form['email'], hash)
             if res:
                 flash("Вы успешно зарегистрованы", "success")
-                return redirect(url_for('/login'))
+                return redirect(url_for('login'))
             else:
                 flash("Ошибка при добавлении в базу", "error")
         else:
