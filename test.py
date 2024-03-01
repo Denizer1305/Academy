@@ -2,21 +2,21 @@ import datetime
 
 from flask import Flask, render_template, make_response, url_for, redirect, request, session
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = "zheaurhneyrayrbieutsctrytetyurbtairtert"
-app.permanent_session_lifetime = datetime.timedelta(days=10 )
-menu = [
-    {"title": "Main", "url": "/"}
-]
-
-
-@app.route("/")
-def index():
-    if "visits" in session:
-        session["visits"] = session.get("visits") + 1
-    else:
-        session["visits"] = 1
-    return f"<h1>Main page</h1> visits {session['visits']}"
+# app = Flask(__name__)
+# app.config['SECRET_KEY'] = "zheaurhneyrayrbieutsctrytetyurbtairtert"
+# app.permanent_session_lifetime = datetime.timedelta(days=10)
+# menu = [
+#     {"title": "Main", "url": "/"}
+# ]
+#
+#
+# @app.route("/")
+# def index():
+#     if "visits" in session:
+#         session["visits"] = session.get("visits") + 1
+#     else:
+#         session["visits"] = 1
+#     return f"<h1>Main page</h1> visits {session['visits']}"
     # data = '{"name": "John Smith", "hometown": {"name": "New York", "id": "123"}}'
     # res = make_response(data)
     # res.headers["Content-Type"] = "application/json"
@@ -63,23 +63,31 @@ def index():
 #     return response
 
 
-@app.route("/login")
-def login():
-    log = ""
-    if request.cookies.get("logged"):
-        log = request.cookies.get("logged")
+# @app.route("/login")
+# def login():
+#     log = ""
+#     if request.cookies.get("logged"):
+#         log = request.cookies.get("logged")
+#
+#     res = make_response(f"<h1> Форма авторизации </h1> logged: {log}")
+#     res.set_cookie("logged", "yes", 30*24*3600)
+#     return res
+#
+#
+# @app.route("/logout")
+# def logout():
+#     res = make_response("Вы больше не авторизованы")
+#     res.set_cookie("logged", "")
+#     return res
+#
+#
+# if __name__ == "__main__":
+#     app.run(debug=True)
 
-    res = make_response(f"<h1> Форма авторизации </h1> logged: {log}")
-    res.set_cookie("logged", "yes", 30*24*3600)
-    return res
+from werkzeug.security import generate_password_hash, check_password_hash
 
+hash = generate_password_hash("123456")
+print(hash)
 
-@app.route("/logout")
-def logout():
-    res = make_response("Вы больше не авторизованы")
-    res.set_cookie("logged", "")
-    return res
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
+check = check_password_hash(hash, "123456")
+print(check)

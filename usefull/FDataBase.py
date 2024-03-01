@@ -15,7 +15,8 @@ class FDataBase:
         try:
             self.__cur.execute(sql)
             res = self.__cur.fetchall()
-            if res: return res
+            if res:
+                return res
         except:
             print("Error get data from DataBase")
         return []
@@ -32,7 +33,6 @@ class FDataBase:
                 tm = math.floor(time.time())
                 self.__cur.execute("INSERT INTO posts VALUES(NULL,?,?,?,?)", (title, text, url, tm))
                 self.__db.commit()
-
         except:
             print("Error adding post")
             return False
@@ -47,11 +47,11 @@ class FDataBase:
                 text = re.sub(r"(?P<tag><img\s+[^>]*src=)(?P<quote>[\"'])(?P<url>.+?)(?P=quote)>",
                               "\\g<tag>"+base+"/\\g<url>>",
                               res['text'])
-                return (res['title'], text)
+                return res['title'], text
         except sqlite3.Error as e:
             print(f"Ошибка при получении поста из БД {e}")
 
-        return (False, False)
+        return False, False
 
     def getPostAnonce(self):
         try:
@@ -63,3 +63,19 @@ class FDataBase:
             print(f"Ошибка при получении постов из БД {e}")
 
         return []
+
+    def addUser(self, name, email, hpsw):
+        try:
+            self.__cur.execute(f"SELECT COUNT() as `count` FROM users WHERE email LIKE '{email}' ")
+            res = self.__cur.fetchone()
+            if res['count'] > 0:
+                print("Такой пользователь уже существует")
+                return False
+            tm = math.floor(time.time())
+            self.__cur.execute("INSERT INTO users VALUES(NULL, ?,?,?,?)", (name, email, hpsw, tm))
+            self.__db.commit()
+        except sqlite3.Error as e:
+            print("Ошибка добавления в базу" + str(e))
+            return False
+
+        return True
