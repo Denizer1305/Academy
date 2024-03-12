@@ -14,9 +14,9 @@ time integer not null
 
 create table if not exists users(
 id integer primary key autoincrement,
-name text not null,
-email text not null,
-psw text not null,
-time integer not null
+name text NOT NULL,
+email text NOT NULL,
+psw text NOT NULL,
+avatar BLOB DEFAULT NULL,
+time integer NOT NULL
 )
-
