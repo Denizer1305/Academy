@@ -6,11 +6,13 @@ from usefull.UserLogin import UserLogin
 from usefull.forms import LoginForm, RegisterForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from admin.admin import admin
 
 app = Flask(__name__)
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'test.db')))
 app.config["SECRET_KEY"] = "hoirjghojropgjehueEFGEOKOPje"
 app.config["MAX_CONTENT_LENGTH"] = 3*1024*1024
+app.register_blueprint(admin, url_prefix="/admin")
 dbase = None
 
 login_manager = LoginManager(app)
