@@ -94,27 +94,27 @@ ul.list-posts .title{
     padding:5px;
     background: #eee;
     color:red;
-  text-decoration: none;
+    text-decoration: none;
 }
 ul.list-posts .title a{
-  color: blue;
-  text-decoration: none;
+    color: blue;
+    text-decoration: none;
 }
 ul.list-posts .title a:hover{
-  color: #43437e ;
-  text-decoration: none;
+    color: #43437e ;
+    text-decoration: none;
 }
 ul.list-posts .annonce{
-  margin:0px;
-  padding:10px 5px 10px 5px;
+    margin:0px;
+    padding:10px 5px 10px 5px;
 }
 
 .profile-ava{
-  width: 180px;
-  text-align: center;
-  overflow: hidden;
-  background: #eee;
-  padding: 10px;
+width: 180px;
+text-align: center;
+overflow: hidden;
+background: #eee;
+padding: 10px;
 }
 .profile-ava img{
   max-width: 130px;
@@ -122,11 +122,11 @@ ul.list-posts .annonce{
   border-radius: 10px;
 }
 .profile-load{
-  max-width: 155px;
+  max-width: 300px;
   margin-top: 10px;
-  overflow: hidden;
+
 }
-.profile-load input[type = "submit"], input[type = "file"]{
+.profile-load input[type = "submit"], input[type="file"]{
   width: 100%;
   font-size: 18px;
   border-radius: 8px;
@@ -136,11 +136,10 @@ ul.list-posts .annonce{
 }
 .profile-table tr{
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap
 }
-.profile-panel{
-  padding: 0 0 0 10px;
-}
+.profile-panel{padding: 0 0 0 10px;}
+
 ul.profile-info{
   list-style: none;
   margin: 10px 0 0 0;
@@ -148,12 +147,14 @@ ul.profile-info{
   color: #333;
 }
 ul.profile-info li{
-  margin-top: 10px 0 0 0;
+  margin: 10px 0 0 0;
 }
+
 .form-contact .invalid{
-  display: inline-block;
+  display: inline block;
   background-color: #ff9898;
 }
+
 .form-contact .invalid-feedback{
   color: #CC0000;
 }

@@ -25,7 +25,7 @@ class UserLogin(UserMixin):
         if not self.__user["avatar"]:
             try:
                 with app.open_resource(app.root_path + url_for('static',
-                                                               filename='img/default.png'),
+                                                               filename= 'img/default.png'),
                                        "rb") as file:
                     img = file.read()
             except FileNotFoundError as e:

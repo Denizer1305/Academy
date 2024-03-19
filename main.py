@@ -11,7 +11,7 @@ from admin.admin import admin
 app = Flask(__name__)
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'test.db')))
 app.config["SECRET_KEY"] = "hoirjghojropgjehueEFGEOKOPje"
-app.config["MAX_CONTENT_LENGTH"] = 3*1024*1024
+app.config["MAX_CONTENT_LENGTH"] = 3 * 1024 * 1024
 app.register_blueprint(admin, url_prefix="/admin")
 dbase = None
 
@@ -60,7 +60,8 @@ def login():
             rm = form.remember.data
             login_user(userlogin, remember=rm)
             return redirect(request.args.get("next") or url_for("profile"))
-        flash("Неверные данные - логин ")
+        flash("Неверные данные - логин ", "error")
+
     return render_template("login.html", menu=dbase.getMenu(), title="Авторизация", form=form)
 
 
@@ -118,18 +119,51 @@ def get_db():
 @login_required
 def profile():
     return render_template("profile.html", menu=dbase.getMenu(), title="Профиль пользователя")
+
+
 #     return f"""
 #             <a href="{url_for('logout')}">Выйти из профиля</a>
 #             user info: {current_user.get_id()}<br>
 #             name user: {current_user.getName()}
 # """
 
-
 @app.route('/logout')
 def logout():
     logout_user()
     flash("Вы вышли из аккаунта", "success")
     return redirect(url_for("login"))
+
+
+@app.route('/userava')
+@login_required
+def userava():
+    img = current_user.getAvatar(app)
+    if not img:
+        return ""
+    answer = make_response(img)
+    answer.headers["Content-Type"] = "image/png"
+    return answer
+
+
+@app.route('/upload', methods=["POST", "GET"])
+@login_required
+def upload():
+    if request.method == "POST":
+        file = request.files['file']
+        if file:
+            try:
+                img = file.read()
+                res = dbase.updateUserAvatar(img, current_user.get_id())
+                if not res:
+                    flash("Ошибка обновления аватара", "error")
+                    return redirect(url_for('profile'))
+                flash("Аватар обновлён", "success")
+            except FileNotFoundError as e:
+                flash("Ошибка чтения файла", 'error')
+        else:
+            flash("Ошибка обновления аватара", 'error')
+
+    return redirect(url_for("profile"))
 
 
 @app.errorhandler(404)
@@ -143,38 +177,5 @@ def close_db(error):
         g.link_db.close()
 
 
-@app.route("/userava")
-@login_required
-def userava():
-    img = current_user.getAvatar(app)
-    if not img:
-        return ""
-    answer = make_response(img)
-    answer.headers['Content-Type'] = "img/png"
-    return answer
-
-
-@app.route("/upload", methods=['POST', "GET"])
-@login_required
-def upload():
-    if request.method == 'POST':
-        file = request.files['file']
-        if file:
-            try:
-                img = file.read()
-                res = dbase.updateUserAvatar(img, current_user.get_id())
-                if not res:
-                    flash("Ошибка обновления аватара!", "error")
-                    return redirect(url_for("profile"))
-                flash("Аватар обновлен", "success")
-            except FileNotFoundError as e:
-                flash("Ошибка чтения файла!" "error")
-        else:
-            flash("Ошибка обновления аватара!" "error")
-
-    return redirect(url_for('profile'))
-
-
 if __name__ == "__main__":
     app.run(debug=True)
-    # create_db()
